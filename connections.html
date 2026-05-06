@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connections</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial;
+}
+
+body {
+    background: linear-gradient(135deg,#0f172a,#020617);
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+h2 {
+    color: #ec4899;
+    margin-bottom: 15px;
+}
+
+h3{
+    margin-top:20px;
+    color:#38bdf8;
+}
+
+/* INPUT AREA */
+.form-group{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+input, select, button {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 14px;
+}
+
+input, select {
+    background:#1e293b;
+    color:white;
+    width: 160px;
+}
+
+button {
+    background: linear-gradient(45deg,#ec4899,#f43f5e);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* CARDS */
+.container {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    gap:15px;
+}
+
+.card {
+    background: rgba(30,41,59,0.7);
+    backdrop-filter: blur(10px);
+    padding: 15px;
+    border-radius: 15px;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    transition: 0.3s;
+}
+
+.card:hover{
+    transform: translateY(-5px);
+}
+
+.delete {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    cursor: pointer;
+    color: #f87171;
+    font-size:18px;
+}
+
+a {
+    color: #38bdf8;
+    display: block;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+/* MOBILE OPTIMIZATION */
+@media(max-width:600px){
+
+    input, select, button{
+        width:100%;
+    }
+
+    .form-group{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    h2{
+        font-size:20px;
+    }
+
+    .card{
+        padding:12px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>🤝 Smart Connection Finder</h2>
+
+<!-- SEARCH -->
+<div class="form-group">
+<input type="text" id="searchSkill" placeholder="Search by skill">
+<select id="roleFilter">
+    <option value="">All Roles</option>
+    <option value="Web Developer">Web Developer</option>
+    <option value="AI Engineer">AI Engineer</option>
+    <option value="Software Developer">Software Developer</option>
+</select>
+<button onclick="findConnections()">Search</button>
+</div>
+
+<!-- ADD NEW -->
+<h3>Add New Student</h3>
+
+<div class="form-group">
+<input type="text" id="name" placeholder="Name">
+<input type="text" id="skill" placeholder="Skill">
+<select id="role">
+    <option value="Web Developer">Web Developer</option>
+    <option value="AI Engineer">AI Engineer</option>
+    <option value="Software Developer">Software Developer</option>
+</select>
+<button onclick="addStudent()">Add</button>
+</div>
+
+<div class="container" id="results"></div>
+
+<script>
+
+// LOAD DATA
+let students = JSON.parse(localStorage.getItem("students")) || [
+    {name:"Khadija", skill:"java", role:"Software Developer"},
+    {name:"Shahuraj", skill:"web", role:"Web Developer"},
+    {name:"Parth", skill:"python", role:"AI Engineer"},
+    {name:"Devank", skill:"ml", role:"AI Engineer"}
+];
+
+// SAVE
+function saveData(){
+    localStorage.setItem("students", JSON.stringify(students));
+}
+
+// ADD STUDENT
+function addStudent(){
+    let name = document.getElementById("name").value.trim();
+    let skill = document.getElementById("skill").value.toLowerCase().trim();
+    let role = document.getElementById("role").value;
+
+    if(!name || !skill){
+        alert("Fill all fields!");
+        return;
+    }
+
+    students.unshift({name, skill, role});
+    saveData();
+    render(students);
+
+    document.getElementById("name").value = "";
+    document.getElementById("skill").value = "";
+}
+
+// SEARCH
+function findConnections(){
+    let skill = document.getElementById("searchSkill").value.toLowerCase();
+    let role = document.getElementById("roleFilter").value;
+
+    let filtered = students.filter(s => {
+        return (
+            (skill === "" || s.skill.includes(skill)) &&
+            (role === "" || s.role === role)
+        );
+    });
+
+    if(filtered.length === 0){
+        document.getElementById("results").innerHTML = `
+            <p>No match found 😢</p>
+            <a href="https://www.linkedin.com/search/results/people/?keywords=${skill}" target="_blank">
+                🌐 Search on LinkedIn
+            </a>
+        `;
+        return;
+    }
+
+    render(filtered);
+}
+
+// RENDER
+function render(data){
+    let output = "";
+
+    data.forEach((s, index) => {
+
+        let query = encodeURIComponent(s.role);
+
+        output += `
+        <div class="card">
+            <span class="delete" onclick="deleteStudent(${index})">✖</span>
+
+            <h3>${s.name}</h3>
+            <p><b>Skill:</b> ${s.skill}</p>
+            <p><b>Role:</b> ${s.role}</p>
+
+            <a href="https://www.linkedin.com/search/results/people/?keywords=${query}" target="_blank">
+                🔗 Connect on LinkedIn
+            </a>
+        </div>
+        `;
+    });
+
+    document.getElementById("results").innerHTML = output;
+}
+
+// DELETE
+function deleteStudent(index){
+    students.splice(index,1);
+    saveData();
+    render(students);
+}
+
+// INITIAL LOAD
+render(students);
+
+</script>
+
+</body>
+</html>

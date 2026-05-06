@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Improve Skills</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg,#0f172a,#020617);
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+/* HEADING */
+h2 {
+    color: #ec4899;
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+/* SELECT + BUTTON */
+select, button {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    margin: 8px auto;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    display: block;
+}
+
+button {
+    background: #ec4899;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #db2777;
+}
+
+/* CARD */
+.card {
+    background: rgba(30,41,59,0.8);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 15px;
+    text-align: left;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* CHECKBOX */
+label {
+    display: block;
+    margin: 8px 0;
+    font-size: 15px;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-right: 8px;
+}
+
+/* PROGRESS BAR */
+.progress {
+    height: 18px;
+    background: #334155;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.bar {
+    height: 100%;
+    background: linear-gradient(to right,#22c55e,#4ade80);
+    width: 0%;
+    transition: 0.5s;
+}
+
+/* LINKS */
+a {
+    color: #38bdf8;
+    display: block;
+    margin-top: 6px;
+    font-size: 14px;
+    word-break: break-all;
+}
+
+/* MOBILE OPTIMIZATION */
+@media (max-width: 480px){
+
+    h2{
+        font-size: 20px;
+    }
+
+    .card{
+        padding: 15px;
+    }
+
+    select, button{
+        font-size: 15px;
+        padding: 10px;
+    }
+
+    label{
+        font-size: 14px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>🚀 Career Improvement Dashboard</h2>
+
+<select id="field">
+    <option value="web">Web Development</option>
+    <option value="ai">AI / ML</option>
+    <option value="core">Core Programming</option>
+    <option value="Python">Python</option>
+    <option value="coreD">Core DSA</option>
+    <option value="Data">Data Science</option>
+    <option value="cyber">Cyber Security</option>
+    <option value="app">App Development</option>
+    <option value="cloud">Cloud Learning</option>
+    <option value="uiux">UIUX Learning</option>
+</select>
+
+<button onclick="suggest()">Generate Roadmap</button>
+
+<div id="output"></div>
+
+<script>
+
+// LOAD PROGRESS
+let progressData = JSON.parse(localStorage.getItem("progress")) || {};
+
+// MAIN FUNCTION
+function suggest(){
+
+    let field = document.getElementById("field").value;
+
+    let roadmap = [];
+    let resources = [];
+
+    if(field === "web"){
+        roadmap = ["HTML","CSS","JavaScript","React","Projects","Deployment"];
+        resources = [
+            "https://developer.mozilla.org/",
+            "https://freecodecamp.org/",
+            "https://github.com/"
+        ];
+    }
+    else if(field === "ai" || field === "Python"){
+        roadmap = ["Python","Numpy","Pandas","Machine Learning","Deep Learning","Projects"];
+        resources = [
+            "https://kaggle.com/",
+            "https://coursera.org/",
+            "https://scikit-learn.org/"
+        ];
+    }
+    else if(field === "coreD"){
+        roadmap = ["C++/Java","DSA","Recursion","Trees","Graphs","Problem Solving"];
+        resources = [
+            "https://leetcode.com/",
+            "https://geeksforgeeks.org/",
+            "https://codeforces.com/"
+        ];
+    }
+    else if(field === "Data"){
+        roadmap = ["Python","SQL","Excel","Data Cleaning","Visualization","Projects"];
+        resources = [
+            "https://kaggle.com/",
+            "https://pandas.pydata.org/",
+            "https://tableau.com/"
+        ];
+    }
+    else if(field === "cyber"){
+        roadmap = ["Networking Basics","Linux","Ethical Hacking","Pen Testing","Security Tools"];
+        resources = [
+            "https://tryhackme.com/",
+            "https://hackthebox.com/",
+            "https://owasp.org/"
+        ];
+    }
+    else if(field === "app"){
+        roadmap = ["Java/Kotlin","Android Studio","UI Design","APIs","Firebase","Deployment"];
+        resources = [
+            "https://developer.android.com/",
+            "https://firebase.google.com/",
+            "https://kotlinlang.org/"
+        ];
+    }
+    else if(field === "cloud"){
+        roadmap = ["Linux","Networking","AWS/Azure","Docker","Kubernetes","CI/CD"];
+        resources = [
+            "https://aws.amazon.com/training/",
+            "https://azure.microsoft.com/",
+            "https://docker.com/"
+        ];
+    }
+    else if(field === "uiux"){
+        roadmap = ["Design Basics","Figma","User Research","Wireframing","Prototyping"];
+        resources = [
+            "https://figma.com/",
+            "https://uxdesign.cc/",
+            "https://behance.net/"
+        ];
+    }
+
+    render(field, roadmap, resources);
+}
+
+// RENDER UI
+function render(field, roadmap, resources){
+
+    let saved = progressData[field] || [];
+
+    let html = `<div class="card"><h3>📌 Roadmap</h3>`;
+
+    roadmap.forEach((step) => {
+        let checked = saved.includes(step) ? "checked" : "";
+
+        html += `
+            <label>
+                <input type="checkbox" ${checked} 
+                onchange="toggle('${field}','${step}')">
+                ${step}
+            </label>
+        `;
+    });
+
+    let percent = Math.floor((saved.length / roadmap.length) * 100);
+
+    html += `
+        <div class="progress">
+            <div class="bar" style="width:${percent}%"></div>
+        </div>
+        <p>📊 Progress: ${percent}%</p>
+
+        <h3>📚 Resources</h3>
+        ${resources.map(r => `<a href="${r}" target="_blank">${r}</a>`).join("")}
+    </div>`;
+
+    document.getElementById("output").innerHTML = html;
+}
+
+// TOGGLE
+function toggle(field, step){
+
+    if(!progressData[field]) progressData[field] = [];
+
+    let arr = progressData[field];
+
+    if(arr.includes(step)){
+        arr = arr.filter(s => s !== step);
+    } else {
+        arr.push(step);
+    }
+
+    progressData[field] = arr;
+
+    localStorage.setItem("progress", JSON.stringify(progressData));
+
+    suggest();
+}
+
+</script>
+
+</body>
+</html>

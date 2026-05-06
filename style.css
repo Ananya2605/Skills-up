@@ -1,0 +1,277 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI';
+    background: radial-gradient(circle at 20% 20%, #0f172a, #020617 80%);
+    color: #e2e8f0;
+    overflow-x: hidden;
+}
+
+/* ✨ SPARKLE BACKGROUND */
+body::before {
+    content: "";
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(#22c55e22 1px, transparent 1px),
+                radial-gradient(#a855f722 1px, transparent 1px);
+    background-size: 60px 60px, 80px 80px;
+    animation: sparkleMove 20s linear infinite;
+    z-index: -1;
+}
+
+@keyframes sparkleMove {
+    from { transform: translate(0,0); }
+    to { transform: translate(-100px, -100px); }
+}
+
+/* HEADER */
+header {
+    text-align: center;
+    padding: 25px;
+    border-bottom: 1px solid #1e293b;
+    backdrop-filter: blur(10px);
+}
+
+/* CONTAINER */
+.container {
+    display: flex;
+    padding: 30px;
+    gap: 30px;
+}
+.home-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.home-container {
+    text-align: center;
+    max-width: 600px;
+}
+
+.features {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.feature-card {
+    flex: 1;
+    padding: 15px;
+    background: #020617;
+    border-radius: 10px;
+    border: 1px solid #1e293b;
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.start-btn {
+    padding: 12px 25px;
+    background: linear-gradient(135deg,#22c55e,#0ea5e9);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.features a {
+    text-decoration: none;
+    color: white;
+}
+
+.feature-card {
+    padding: 20px;
+    background: #111827;
+    border-radius: 12px;
+    margin: 10px;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+.feature-card:hover {
+    background: #ec4899;
+    transform: scale(1.05);
+}
+.feature-card {
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.features a {
+    pointer-events: auto;
+}
+.start-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #ec4899;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.start-btn {
+    background: #ec4899;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+.delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: #ef4444;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.delete-btn:hover {
+    transform: scale(1.2);
+}
+/* FORM */
+.form-box {
+    width: 40%;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 20px;
+    border-radius: 14px;
+    backdrop-filter: blur(12px);
+    border: 1px solid #1e293b;
+    transition: 0.3s;
+}
+
+.form-box:hover {
+    transform: translateY(-5px);
+}
+
+/* INPUTS */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background: #020617;
+    border: 1px solid #1e293b;
+    color: white;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #22c55e;
+    outline: none;
+    box-shadow: 0 0 8px #22c55e33;
+}
+
+/* BUTTONS */
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+button {
+    flex: 1;
+    padding: 12px;
+    background: linear-gradient(135deg, #0ea5e9, #22c55e);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+button:hover {
+    transform: translateY(-2px) scale(1.02);
+    background: linear-gradient(135deg, #0284c7, #16a34a);
+}
+
+/* CLEAR BUTTON */
+.clear-btn {
+    background: linear-gradient(135deg, #ef4444, #a855f7);
+}
+
+.clear-btn:hover {
+    background: linear-gradient(135deg, #dc2626, #9333ea);
+}
+.connect {
+    margin-top: 10px;
+    color: #a855f7;
+    font-size: 13px;
+}
+.connections {
+    margin-top: 10px;
+    padding: 8px;
+    background: #020617;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.connections span {
+    background: #1e293b;
+    padding: 4px 8px;
+    margin: 3px;
+    display: inline-block;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.connections span:hover {
+    background: #22c55e;
+    color: black;
+}
+
+.no-conn {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #64748b;
+}
+/* OUTPUT */
+.output-box {
+    width: 60%;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 20px;
+    border-radius: 14px;
+    backdrop-filter: blur(12px);
+    border: 1px solid #1e293b;
+}
+
+/* CARD */
+.card {
+    background: #020617;
+    padding: 15px;
+    margin-top: 15px;
+    border-left: 4px solid #22c55e;
+    border-radius: 10px;
+    animation: fadeIn 0.5s ease;
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ✨ CARD GLOW STRIP */
+.card::before {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: linear-gradient(#22c55e, #a855f7);
+}
+
+/* HOVER EFFECT */
+.card:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 10px 25px rgba(34,197,94,0.15);
+}
+
+/* FADE ANIMATION */
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(15px);}
+    to {opacity: 1; transform: translateY(0);}
+}

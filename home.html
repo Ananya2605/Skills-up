@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Placement Intelligence</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1> 🏙️ AI Placement Intelligence System</h1>
+    <p>💻 Smart Career Guidance for Students 📈</p>
+</header>
+
+<div class="container">
+
+    <!-- FORM PANEL -->
+    <div class="form-box">
+        <h2>Student Profile</h2>
+        <p class="sub-text">Enter your details to get AI-based insights</p>
+
+        <input type="text" id="name" placeholder="Your Name">
+        <input type="text" id="company" placeholder="Dream Company">
+        
+        <select id="role">
+            <option value="">Select Role</option>
+            <option>Frontend Developer</option>
+            <option>Backend Developer</option>
+            <option>Data Analyst</option>
+            <option>AI Engineer</option>
+        </select>
+
+        <input type="number" id="package" placeholder="Expected Package (LPA)">
+        <input type="text" id="skills" placeholder="Skills (comma separated)">
+
+        <!-- BUTTON GROUP -->
+        <div class="btn-group">
+            <button onclick="submitData()">Analyze</button>
+            <button onclick="clearData()" class="clear-btn">Clear All</button>
+        </div>
+    </div>
+
+    <!-- OUTPUT PANEL -->
+    <div class="output-box">
+        <div class="output-header">
+            <h2>Student Insights</h2>
+            <span id="count"></span>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
